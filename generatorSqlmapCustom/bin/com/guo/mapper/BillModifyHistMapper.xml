@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guo.mapper.BillModifyHistMapper">
+  <resultMap id="BaseResultMap" type="com.guo.pojo.BillModifyHist">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BILL_ID" jdbcType="INTEGER" property="billId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="MODIFY_PROR_NAME" jdbcType="VARCHAR" property="modifyProrName" />
+    <result column="MODIFY_DT" jdbcType="TIMESTAMP" property="modifyDt" />
+    <result column="MODIFY_BEFORE" jdbcType="VARCHAR" property="modifyBefore" />
+    <result column="MODIFY_AFTER" jdbcType="VARCHAR" property="modifyAfter" />
+    <result column="MODIFY_USER" jdbcType="VARCHAR" property="modifyUser" />
+    <result column="BILL_SOURCE" jdbcType="VARCHAR" property="billSource" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BILL_ID, BILL_NO, MODIFY_PROR_NAME, MODIFY_DT, MODIFY_BEFORE, MODIFY_AFTER, MODIFY_USER, 
+    BILL_SOURCE
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.BillModifyHistExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from BILL_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BILL_MODIFY_HIST
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from BILL_MODIFY_HIST
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.BillModifyHistExample">
+    delete from BILL_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.BillModifyHist">
+    insert into BILL_MODIFY_HIST (ID, BILL_ID, BILL_NO, 
+      MODIFY_PROR_NAME, MODIFY_DT, MODIFY_BEFORE, 
+      MODIFY_AFTER, MODIFY_USER, BILL_SOURCE
+      )
+    values (#{id,jdbcType=BIGINT}, #{billId,jdbcType=INTEGER}, #{billNo,jdbcType=VARCHAR}, 
+      #{modifyProrName,jdbcType=VARCHAR}, #{modifyDt,jdbcType=TIMESTAMP}, #{modifyBefore,jdbcType=VARCHAR}, 
+      #{modifyAfter,jdbcType=VARCHAR}, #{modifyUser,jdbcType=VARCHAR}, #{billSource,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.BillModifyHist">
+    insert into BILL_MODIFY_HIST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="modifyProrName != null">
+        MODIFY_PROR_NAME,
+      </if>
+      <if test="modifyDt != null">
+        MODIFY_DT,
+      </if>
+      <if test="modifyBefore != null">
+        MODIFY_BEFORE,
+      </if>
+      <if test="modifyAfter != null">
+        MODIFY_AFTER,
+      </if>
+      <if test="modifyUser != null">
+        MODIFY_USER,
+      </if>
+      <if test="billSource != null">
+        BILL_SOURCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyProrName != null">
+        #{modifyProrName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDt != null">
+        #{modifyDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBefore != null">
+        #{modifyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAfter != null">
+        #{modifyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUser != null">
+        #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="billSource != null">
+        #{billSource,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.BillModifyHistExample" resultType="java.lang.Integer">
+    select count(*) from BILL_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update BILL_MODIFY_HIST
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyProrName != null">
+        MODIFY_PROR_NAME = #{record.modifyProrName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyDt != null">
+        MODIFY_DT = #{record.modifyDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyBefore != null">
+        MODIFY_BEFORE = #{record.modifyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyAfter != null">
+        MODIFY_AFTER = #{record.modifyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUser != null">
+        MODIFY_USER = #{record.modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billSource != null">
+        BILL_SOURCE = #{record.billSource,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update BILL_MODIFY_HIST
+    set ID = #{record.id,jdbcType=BIGINT},
+      BILL_ID = #{record.billId,jdbcType=INTEGER},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      MODIFY_PROR_NAME = #{record.modifyProrName,jdbcType=VARCHAR},
+      MODIFY_DT = #{record.modifyDt,jdbcType=TIMESTAMP},
+      MODIFY_BEFORE = #{record.modifyBefore,jdbcType=VARCHAR},
+      MODIFY_AFTER = #{record.modifyAfter,jdbcType=VARCHAR},
+      MODIFY_USER = #{record.modifyUser,jdbcType=VARCHAR},
+      BILL_SOURCE = #{record.billSource,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.BillModifyHist">
+    update BILL_MODIFY_HIST
+    <set>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyProrName != null">
+        MODIFY_PROR_NAME = #{modifyProrName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDt != null">
+        MODIFY_DT = #{modifyDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBefore != null">
+        MODIFY_BEFORE = #{modifyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAfter != null">
+        MODIFY_AFTER = #{modifyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUser != null">
+        MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="billSource != null">
+        BILL_SOURCE = #{billSource,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.BillModifyHist">
+    update BILL_MODIFY_HIST
+    set BILL_ID = #{billId,jdbcType=INTEGER},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      MODIFY_PROR_NAME = #{modifyProrName,jdbcType=VARCHAR},
+      MODIFY_DT = #{modifyDt,jdbcType=TIMESTAMP},
+      MODIFY_BEFORE = #{modifyBefore,jdbcType=VARCHAR},
+      MODIFY_AFTER = #{modifyAfter,jdbcType=VARCHAR},
+      MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      BILL_SOURCE = #{billSource,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.guo.pojo.BillModifyHist">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BILL_ID" jdbcType="INTEGER" property="billId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="MODIFY_PROR_NAME" jdbcType="VARCHAR" property="modifyProrName" />
+    <result column="MODIFY_DT" jdbcType="TIMESTAMP" property="modifyDt" />
+    <result column="MODIFY_BEFORE" jdbcType="VARCHAR" property="modifyBefore" />
+    <result column="MODIFY_AFTER" jdbcType="VARCHAR" property="modifyAfter" />
+    <result column="MODIFY_USER" jdbcType="VARCHAR" property="modifyUser" />
+    <result column="BILL_SOURCE" jdbcType="VARCHAR" property="billSource" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BILL_ID, BILL_NO, MODIFY_PROR_NAME, MODIFY_DT, MODIFY_BEFORE, MODIFY_AFTER, MODIFY_USER, 
+    BILL_SOURCE
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.BillModifyHistExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from BILL_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BILL_MODIFY_HIST
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from BILL_MODIFY_HIST
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.BillModifyHistExample">
+    delete from BILL_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.BillModifyHist">
+    insert into BILL_MODIFY_HIST (ID, BILL_ID, BILL_NO, 
+      MODIFY_PROR_NAME, MODIFY_DT, MODIFY_BEFORE, 
+      MODIFY_AFTER, MODIFY_USER, BILL_SOURCE
+      )
+    values (#{id,jdbcType=BIGINT}, #{billId,jdbcType=INTEGER}, #{billNo,jdbcType=VARCHAR}, 
+      #{modifyProrName,jdbcType=VARCHAR}, #{modifyDt,jdbcType=TIMESTAMP}, #{modifyBefore,jdbcType=VARCHAR}, 
+      #{modifyAfter,jdbcType=VARCHAR}, #{modifyUser,jdbcType=VARCHAR}, #{billSource,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.BillModifyHist">
+    insert into BILL_MODIFY_HIST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="modifyProrName != null">
+        MODIFY_PROR_NAME,
+      </if>
+      <if test="modifyDt != null">
+        MODIFY_DT,
+      </if>
+      <if test="modifyBefore != null">
+        MODIFY_BEFORE,
+      </if>
+      <if test="modifyAfter != null">
+        MODIFY_AFTER,
+      </if>
+      <if test="modifyUser != null">
+        MODIFY_USER,
+      </if>
+      <if test="billSource != null">
+        BILL_SOURCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyProrName != null">
+        #{modifyProrName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDt != null">
+        #{modifyDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBefore != null">
+        #{modifyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAfter != null">
+        #{modifyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUser != null">
+        #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="billSource != null">
+        #{billSource,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.BillModifyHistExample" resultType="java.lang.Integer">
+    select count(*) from BILL_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update BILL_MODIFY_HIST
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyProrName != null">
+        MODIFY_PROR_NAME = #{record.modifyProrName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyDt != null">
+        MODIFY_DT = #{record.modifyDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyBefore != null">
+        MODIFY_BEFORE = #{record.modifyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyAfter != null">
+        MODIFY_AFTER = #{record.modifyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUser != null">
+        MODIFY_USER = #{record.modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billSource != null">
+        BILL_SOURCE = #{record.billSource,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update BILL_MODIFY_HIST
+    set ID = #{record.id,jdbcType=BIGINT},
+      BILL_ID = #{record.billId,jdbcType=INTEGER},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      MODIFY_PROR_NAME = #{record.modifyProrName,jdbcType=VARCHAR},
+      MODIFY_DT = #{record.modifyDt,jdbcType=TIMESTAMP},
+      MODIFY_BEFORE = #{record.modifyBefore,jdbcType=VARCHAR},
+      MODIFY_AFTER = #{record.modifyAfter,jdbcType=VARCHAR},
+      MODIFY_USER = #{record.modifyUser,jdbcType=VARCHAR},
+      BILL_SOURCE = #{record.billSource,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.BillModifyHist">
+    update BILL_MODIFY_HIST
+    <set>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyProrName != null">
+        MODIFY_PROR_NAME = #{modifyProrName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDt != null">
+        MODIFY_DT = #{modifyDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBefore != null">
+        MODIFY_BEFORE = #{modifyBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAfter != null">
+        MODIFY_AFTER = #{modifyAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUser != null">
+        MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="billSource != null">
+        BILL_SOURCE = #{billSource,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.BillModifyHist">
+    update BILL_MODIFY_HIST
+    set BILL_ID = #{billId,jdbcType=INTEGER},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      MODIFY_PROR_NAME = #{modifyProrName,jdbcType=VARCHAR},
+      MODIFY_DT = #{modifyDt,jdbcType=TIMESTAMP},
+      MODIFY_BEFORE = #{modifyBefore,jdbcType=VARCHAR},
+      MODIFY_AFTER = #{modifyAfter,jdbcType=VARCHAR},
+      MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      BILL_SOURCE = #{billSource,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

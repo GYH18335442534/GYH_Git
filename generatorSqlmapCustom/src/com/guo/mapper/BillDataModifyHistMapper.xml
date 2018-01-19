@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guo.mapper.BillDataModifyHistMapper">
+  <resultMap id="BaseResultMap" type="com.guo.pojo.BillDataModifyHist">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BILL_ID" jdbcType="INTEGER" property="billId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="ISSU_DATE" jdbcType="TIMESTAMP" property="issuDate" />
+    <result column="REMITTER" jdbcType="VARCHAR" property="remitter" />
+    <result column="REMITTER_ACCT_NO" jdbcType="VARCHAR" property="remitterAcctNo" />
+    <result column="PAYEE" jdbcType="VARCHAR" property="payee" />
+    <result column="PROD_NAME" jdbcType="VARCHAR" property="prodName" />
+    <result column="MODIFY_USER" jdbcType="VARCHAR" property="modifyUser" />
+    <result column="CREAT_TIME" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="BILL_SOURCE" jdbcType="VARCHAR" property="billSource" />
+    <result column="REBUYBILL_ID" jdbcType="INTEGER" property="rebuybillId" />
+    <result column="INITAL_TYPE" jdbcType="VARCHAR" property="initalType" />
+    <result column="CUST_MANAGER_NAME" jdbcType="VARCHAR" property="custManagerName" />
+    <result column="CUST_MANAGER_NO" jdbcType="VARCHAR" property="custManagerNo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BILL_ID, BILL_NO, ISSU_DATE, REMITTER, REMITTER_ACCT_NO, PAYEE, PROD_NAME, MODIFY_USER, 
+    CREAT_TIME, BILL_SOURCE, REBUYBILL_ID, INITAL_TYPE, CUST_MANAGER_NAME, CUST_MANAGER_NO
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.BillDataModifyHistExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from BILL_DATA_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BILL_DATA_MODIFY_HIST
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from BILL_DATA_MODIFY_HIST
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.BillDataModifyHistExample">
+    delete from BILL_DATA_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.BillDataModifyHist">
+    insert into BILL_DATA_MODIFY_HIST (ID, BILL_ID, BILL_NO, 
+      ISSU_DATE, REMITTER, REMITTER_ACCT_NO, 
+      PAYEE, PROD_NAME, MODIFY_USER, 
+      CREAT_TIME, BILL_SOURCE, REBUYBILL_ID, 
+      INITAL_TYPE, CUST_MANAGER_NAME, CUST_MANAGER_NO
+      )
+    values (#{id,jdbcType=BIGINT}, #{billId,jdbcType=INTEGER}, #{billNo,jdbcType=VARCHAR}, 
+      #{issuDate,jdbcType=TIMESTAMP}, #{remitter,jdbcType=VARCHAR}, #{remitterAcctNo,jdbcType=VARCHAR}, 
+      #{payee,jdbcType=VARCHAR}, #{prodName,jdbcType=VARCHAR}, #{modifyUser,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=TIMESTAMP}, #{billSource,jdbcType=VARCHAR}, #{rebuybillId,jdbcType=INTEGER}, 
+      #{initalType,jdbcType=VARCHAR}, #{custManagerName,jdbcType=VARCHAR}, #{custManagerNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.BillDataModifyHist">
+    insert into BILL_DATA_MODIFY_HIST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE,
+      </if>
+      <if test="remitter != null">
+        REMITTER,
+      </if>
+      <if test="remitterAcctNo != null">
+        REMITTER_ACCT_NO,
+      </if>
+      <if test="payee != null">
+        PAYEE,
+      </if>
+      <if test="prodName != null">
+        PROD_NAME,
+      </if>
+      <if test="modifyUser != null">
+        MODIFY_USER,
+      </if>
+      <if test="creatTime != null">
+        CREAT_TIME,
+      </if>
+      <if test="billSource != null">
+        BILL_SOURCE,
+      </if>
+      <if test="rebuybillId != null">
+        REBUYBILL_ID,
+      </if>
+      <if test="initalType != null">
+        INITAL_TYPE,
+      </if>
+      <if test="custManagerName != null">
+        CUST_MANAGER_NAME,
+      </if>
+      <if test="custManagerNo != null">
+        CUST_MANAGER_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="issuDate != null">
+        #{issuDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remitter != null">
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="remitterAcctNo != null">
+        #{remitterAcctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null">
+        #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null">
+        #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUser != null">
+        #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billSource != null">
+        #{billSource,jdbcType=VARCHAR},
+      </if>
+      <if test="rebuybillId != null">
+        #{rebuybillId,jdbcType=INTEGER},
+      </if>
+      <if test="initalType != null">
+        #{initalType,jdbcType=VARCHAR},
+      </if>
+      <if test="custManagerName != null">
+        #{custManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="custManagerNo != null">
+        #{custManagerNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.BillDataModifyHistExample" resultType="java.lang.Integer">
+    select count(*) from BILL_DATA_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update BILL_DATA_MODIFY_HIST
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issuDate != null">
+        ISSU_DATE = #{record.issuDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remitter != null">
+        REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remitterAcctNo != null">
+        REMITTER_ACCT_NO = #{record.remitterAcctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payee != null">
+        PAYEE = #{record.payee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodName != null">
+        PROD_NAME = #{record.prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUser != null">
+        MODIFY_USER = #{record.modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatTime != null">
+        CREAT_TIME = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.billSource != null">
+        BILL_SOURCE = #{record.billSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rebuybillId != null">
+        REBUYBILL_ID = #{record.rebuybillId,jdbcType=INTEGER},
+      </if>
+      <if test="record.initalType != null">
+        INITAL_TYPE = #{record.initalType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custManagerName != null">
+        CUST_MANAGER_NAME = #{record.custManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custManagerNo != null">
+        CUST_MANAGER_NO = #{record.custManagerNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update BILL_DATA_MODIFY_HIST
+    set ID = #{record.id,jdbcType=BIGINT},
+      BILL_ID = #{record.billId,jdbcType=INTEGER},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      ISSU_DATE = #{record.issuDate,jdbcType=TIMESTAMP},
+      REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      REMITTER_ACCT_NO = #{record.remitterAcctNo,jdbcType=VARCHAR},
+      PAYEE = #{record.payee,jdbcType=VARCHAR},
+      PROD_NAME = #{record.prodName,jdbcType=VARCHAR},
+      MODIFY_USER = #{record.modifyUser,jdbcType=VARCHAR},
+      CREAT_TIME = #{record.creatTime,jdbcType=TIMESTAMP},
+      BILL_SOURCE = #{record.billSource,jdbcType=VARCHAR},
+      REBUYBILL_ID = #{record.rebuybillId,jdbcType=INTEGER},
+      INITAL_TYPE = #{record.initalType,jdbcType=VARCHAR},
+      CUST_MANAGER_NAME = #{record.custManagerName,jdbcType=VARCHAR},
+      CUST_MANAGER_NO = #{record.custManagerNo,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.BillDataModifyHist">
+    update BILL_DATA_MODIFY_HIST
+    <set>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE = #{issuDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remitter != null">
+        REMITTER = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="remitterAcctNo != null">
+        REMITTER_ACCT_NO = #{remitterAcctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null">
+        PAYEE = #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null">
+        PROD_NAME = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUser != null">
+        MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billSource != null">
+        BILL_SOURCE = #{billSource,jdbcType=VARCHAR},
+      </if>
+      <if test="rebuybillId != null">
+        REBUYBILL_ID = #{rebuybillId,jdbcType=INTEGER},
+      </if>
+      <if test="initalType != null">
+        INITAL_TYPE = #{initalType,jdbcType=VARCHAR},
+      </if>
+      <if test="custManagerName != null">
+        CUST_MANAGER_NAME = #{custManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="custManagerNo != null">
+        CUST_MANAGER_NO = #{custManagerNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.BillDataModifyHist">
+    update BILL_DATA_MODIFY_HIST
+    set BILL_ID = #{billId,jdbcType=INTEGER},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      ISSU_DATE = #{issuDate,jdbcType=TIMESTAMP},
+      REMITTER = #{remitter,jdbcType=VARCHAR},
+      REMITTER_ACCT_NO = #{remitterAcctNo,jdbcType=VARCHAR},
+      PAYEE = #{payee,jdbcType=VARCHAR},
+      PROD_NAME = #{prodName,jdbcType=VARCHAR},
+      MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      BILL_SOURCE = #{billSource,jdbcType=VARCHAR},
+      REBUYBILL_ID = #{rebuybillId,jdbcType=INTEGER},
+      INITAL_TYPE = #{initalType,jdbcType=VARCHAR},
+      CUST_MANAGER_NAME = #{custManagerName,jdbcType=VARCHAR},
+      CUST_MANAGER_NO = #{custManagerNo,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.guo.pojo.BillDataModifyHist">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BILL_ID" jdbcType="INTEGER" property="billId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="ISSU_DATE" jdbcType="TIMESTAMP" property="issuDate" />
+    <result column="REMITTER" jdbcType="VARCHAR" property="remitter" />
+    <result column="REMITTER_ACCT_NO" jdbcType="VARCHAR" property="remitterAcctNo" />
+    <result column="PAYEE" jdbcType="VARCHAR" property="payee" />
+    <result column="PROD_NAME" jdbcType="VARCHAR" property="prodName" />
+    <result column="MODIFY_USER" jdbcType="VARCHAR" property="modifyUser" />
+    <result column="CREAT_TIME" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="BILL_SOURCE" jdbcType="VARCHAR" property="billSource" />
+    <result column="REBUYBILL_ID" jdbcType="INTEGER" property="rebuybillId" />
+    <result column="INITAL_TYPE" jdbcType="VARCHAR" property="initalType" />
+    <result column="CUST_MANAGER_NAME" jdbcType="VARCHAR" property="custManagerName" />
+    <result column="CUST_MANAGER_NO" jdbcType="VARCHAR" property="custManagerNo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BILL_ID, BILL_NO, ISSU_DATE, REMITTER, REMITTER_ACCT_NO, PAYEE, PROD_NAME, MODIFY_USER, 
+    CREAT_TIME, BILL_SOURCE, REBUYBILL_ID, INITAL_TYPE, CUST_MANAGER_NAME, CUST_MANAGER_NO
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.BillDataModifyHistExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from BILL_DATA_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BILL_DATA_MODIFY_HIST
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from BILL_DATA_MODIFY_HIST
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.BillDataModifyHistExample">
+    delete from BILL_DATA_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.BillDataModifyHist">
+    insert into BILL_DATA_MODIFY_HIST (ID, BILL_ID, BILL_NO, 
+      ISSU_DATE, REMITTER, REMITTER_ACCT_NO, 
+      PAYEE, PROD_NAME, MODIFY_USER, 
+      CREAT_TIME, BILL_SOURCE, REBUYBILL_ID, 
+      INITAL_TYPE, CUST_MANAGER_NAME, CUST_MANAGER_NO
+      )
+    values (#{id,jdbcType=BIGINT}, #{billId,jdbcType=INTEGER}, #{billNo,jdbcType=VARCHAR}, 
+      #{issuDate,jdbcType=TIMESTAMP}, #{remitter,jdbcType=VARCHAR}, #{remitterAcctNo,jdbcType=VARCHAR}, 
+      #{payee,jdbcType=VARCHAR}, #{prodName,jdbcType=VARCHAR}, #{modifyUser,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=TIMESTAMP}, #{billSource,jdbcType=VARCHAR}, #{rebuybillId,jdbcType=INTEGER}, 
+      #{initalType,jdbcType=VARCHAR}, #{custManagerName,jdbcType=VARCHAR}, #{custManagerNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.BillDataModifyHist">
+    insert into BILL_DATA_MODIFY_HIST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE,
+      </if>
+      <if test="remitter != null">
+        REMITTER,
+      </if>
+      <if test="remitterAcctNo != null">
+        REMITTER_ACCT_NO,
+      </if>
+      <if test="payee != null">
+        PAYEE,
+      </if>
+      <if test="prodName != null">
+        PROD_NAME,
+      </if>
+      <if test="modifyUser != null">
+        MODIFY_USER,
+      </if>
+      <if test="creatTime != null">
+        CREAT_TIME,
+      </if>
+      <if test="billSource != null">
+        BILL_SOURCE,
+      </if>
+      <if test="rebuybillId != null">
+        REBUYBILL_ID,
+      </if>
+      <if test="initalType != null">
+        INITAL_TYPE,
+      </if>
+      <if test="custManagerName != null">
+        CUST_MANAGER_NAME,
+      </if>
+      <if test="custManagerNo != null">
+        CUST_MANAGER_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="issuDate != null">
+        #{issuDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remitter != null">
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="remitterAcctNo != null">
+        #{remitterAcctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null">
+        #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null">
+        #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUser != null">
+        #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billSource != null">
+        #{billSource,jdbcType=VARCHAR},
+      </if>
+      <if test="rebuybillId != null">
+        #{rebuybillId,jdbcType=INTEGER},
+      </if>
+      <if test="initalType != null">
+        #{initalType,jdbcType=VARCHAR},
+      </if>
+      <if test="custManagerName != null">
+        #{custManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="custManagerNo != null">
+        #{custManagerNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.BillDataModifyHistExample" resultType="java.lang.Integer">
+    select count(*) from BILL_DATA_MODIFY_HIST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update BILL_DATA_MODIFY_HIST
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issuDate != null">
+        ISSU_DATE = #{record.issuDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remitter != null">
+        REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remitterAcctNo != null">
+        REMITTER_ACCT_NO = #{record.remitterAcctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payee != null">
+        PAYEE = #{record.payee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodName != null">
+        PROD_NAME = #{record.prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUser != null">
+        MODIFY_USER = #{record.modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatTime != null">
+        CREAT_TIME = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.billSource != null">
+        BILL_SOURCE = #{record.billSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rebuybillId != null">
+        REBUYBILL_ID = #{record.rebuybillId,jdbcType=INTEGER},
+      </if>
+      <if test="record.initalType != null">
+        INITAL_TYPE = #{record.initalType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custManagerName != null">
+        CUST_MANAGER_NAME = #{record.custManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custManagerNo != null">
+        CUST_MANAGER_NO = #{record.custManagerNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update BILL_DATA_MODIFY_HIST
+    set ID = #{record.id,jdbcType=BIGINT},
+      BILL_ID = #{record.billId,jdbcType=INTEGER},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      ISSU_DATE = #{record.issuDate,jdbcType=TIMESTAMP},
+      REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      REMITTER_ACCT_NO = #{record.remitterAcctNo,jdbcType=VARCHAR},
+      PAYEE = #{record.payee,jdbcType=VARCHAR},
+      PROD_NAME = #{record.prodName,jdbcType=VARCHAR},
+      MODIFY_USER = #{record.modifyUser,jdbcType=VARCHAR},
+      CREAT_TIME = #{record.creatTime,jdbcType=TIMESTAMP},
+      BILL_SOURCE = #{record.billSource,jdbcType=VARCHAR},
+      REBUYBILL_ID = #{record.rebuybillId,jdbcType=INTEGER},
+      INITAL_TYPE = #{record.initalType,jdbcType=VARCHAR},
+      CUST_MANAGER_NAME = #{record.custManagerName,jdbcType=VARCHAR},
+      CUST_MANAGER_NO = #{record.custManagerNo,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.BillDataModifyHist">
+    update BILL_DATA_MODIFY_HIST
+    <set>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE = #{issuDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remitter != null">
+        REMITTER = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="remitterAcctNo != null">
+        REMITTER_ACCT_NO = #{remitterAcctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null">
+        PAYEE = #{payee,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null">
+        PROD_NAME = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUser != null">
+        MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billSource != null">
+        BILL_SOURCE = #{billSource,jdbcType=VARCHAR},
+      </if>
+      <if test="rebuybillId != null">
+        REBUYBILL_ID = #{rebuybillId,jdbcType=INTEGER},
+      </if>
+      <if test="initalType != null">
+        INITAL_TYPE = #{initalType,jdbcType=VARCHAR},
+      </if>
+      <if test="custManagerName != null">
+        CUST_MANAGER_NAME = #{custManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="custManagerNo != null">
+        CUST_MANAGER_NO = #{custManagerNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.BillDataModifyHist">
+    update BILL_DATA_MODIFY_HIST
+    set BILL_ID = #{billId,jdbcType=INTEGER},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      ISSU_DATE = #{issuDate,jdbcType=TIMESTAMP},
+      REMITTER = #{remitter,jdbcType=VARCHAR},
+      REMITTER_ACCT_NO = #{remitterAcctNo,jdbcType=VARCHAR},
+      PAYEE = #{payee,jdbcType=VARCHAR},
+      PROD_NAME = #{prodName,jdbcType=VARCHAR},
+      MODIFY_USER = #{modifyUser,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      BILL_SOURCE = #{billSource,jdbcType=VARCHAR},
+      REBUYBILL_ID = #{rebuybillId,jdbcType=INTEGER},
+      INITAL_TYPE = #{initalType,jdbcType=VARCHAR},
+      CUST_MANAGER_NAME = #{custManagerName,jdbcType=VARCHAR},
+      CUST_MANAGER_NO = #{custManagerNo,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

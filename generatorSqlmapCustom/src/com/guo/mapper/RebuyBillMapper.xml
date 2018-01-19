@@ -1,0 +1,4836 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guo.mapper.RebuyBillMapper">
+  <resultMap id="BaseResultMap" type="com.guo.pojo.RebuyBill">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BATCH_ID" jdbcType="BIGINT" property="batchId" />
+    <result column="MEMBER_ID" jdbcType="CHAR" property="memberId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="BILL_MONEY" jdbcType="DECIMAL" property="billMoney" />
+    <result column="DUE_DATE" jdbcType="DATE" property="dueDate" />
+    <result column="DUE_MAT_DATE" jdbcType="DATE" property="dueMatDate" />
+    <result column="ISSU_DATE" jdbcType="DATE" property="issuDate" />
+    <result column="REMITTER" jdbcType="VARCHAR" property="remitter" />
+    <result column="DRAWEE" jdbcType="VARCHAR" property="drawee" />
+    <result column="ACCEPTOR_BRANCH_CODE" jdbcType="CHAR" property="acceptorBranchCode" />
+    <result column="ACPT_CFM_BRANCH_CODE" jdbcType="CHAR" property="acptCfmBranchCode" />
+    <result column="ACPT_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="acptGuarntrBranchCode" />
+    <result column="DISC_BRANCH_CODE" jdbcType="CHAR" property="discBranchCode" />
+    <result column="DISC_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="discGuarntrBranchCode" />
+    <result column="TRUST_BRANCH_CODE" jdbcType="CHAR" property="trustBranchCode" />
+    <result column="REMAIN_DAYS" jdbcType="INTEGER" property="remainDays" />
+    <result column="DUE_REMAIN_DAYS" jdbcType="INTEGER" property="dueRemainDays" />
+    <result column="INTEREST" jdbcType="DECIMAL" property="interest" />
+    <result column="DUE_INTEREST" jdbcType="DECIMAL" property="dueInterest" />
+    <result column="SETTLE_AMT" jdbcType="DECIMAL" property="settleAmt" />
+    <result column="DUE_SETTLE_AMT" jdbcType="DECIMAL" property="dueSettleAmt" />
+    <result column="SCR_RELATION_FLAG" jdbcType="VARCHAR" property="scrRelationFlag" />
+    <result column="PRE_RELATION_FLAG" jdbcType="VARCHAR" property="preRelationFlag" />
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId" />
+    <result column="FREEZN_FLAG" jdbcType="VARCHAR" property="freeznFlag" />
+    <result column="GATH_TYPE" jdbcType="VARCHAR" property="gathType" />
+    <result column="GATH_DATE" jdbcType="DATE" property="gathDate" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BATCH_ID, MEMBER_ID, BILL_NO, BILL_MONEY, DUE_DATE, DUE_MAT_DATE, ISSU_DATE, 
+    REMITTER, DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, ACPT_GUARNTR_BRANCH_CODE, 
+    DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+    INTEREST, DUE_INTEREST, SETTLE_AMT, DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+    BILL_ID, FREEZN_FLAG, GATH_TYPE, GATH_DATE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.RebuyBillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.RebuyBillExample">
+    delete from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL (ID, BATCH_ID, MEMBER_ID, 
+      BILL_NO, BILL_MONEY, DUE_DATE, 
+      DUE_MAT_DATE, ISSU_DATE, REMITTER, 
+      DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, 
+      ACPT_GUARNTR_BRANCH_CODE, DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, 
+      TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+      INTEREST, DUE_INTEREST, SETTLE_AMT, 
+      DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+      BILL_ID, FREEZN_FLAG, GATH_TYPE, 
+      GATH_DATE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{batchId,jdbcType=BIGINT}, #{memberId,jdbcType=CHAR}, 
+      #{billNo,jdbcType=VARCHAR}, #{billMoney,jdbcType=DECIMAL}, #{dueDate,jdbcType=DATE}, 
+      #{dueMatDate,jdbcType=DATE}, #{issuDate,jdbcType=DATE}, #{remitter,jdbcType=VARCHAR}, 
+      #{drawee,jdbcType=VARCHAR}, #{acceptorBranchCode,jdbcType=CHAR}, #{acptCfmBranchCode,jdbcType=CHAR}, 
+      #{acptGuarntrBranchCode,jdbcType=CHAR}, #{discBranchCode,jdbcType=CHAR}, #{discGuarntrBranchCode,jdbcType=CHAR}, 
+      #{trustBranchCode,jdbcType=CHAR}, #{remainDays,jdbcType=INTEGER}, #{dueRemainDays,jdbcType=INTEGER}, 
+      #{interest,jdbcType=DECIMAL}, #{dueInterest,jdbcType=DECIMAL}, #{settleAmt,jdbcType=DECIMAL}, 
+      #{dueSettleAmt,jdbcType=DECIMAL}, #{scrRelationFlag,jdbcType=VARCHAR}, #{preRelationFlag,jdbcType=VARCHAR}, 
+      #{billId,jdbcType=BIGINT}, #{freeznFlag,jdbcType=VARCHAR}, #{gathType,jdbcType=VARCHAR}, 
+      #{gathDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="batchId != null">
+        BATCH_ID,
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY,
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE,
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE,
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE,
+      </if>
+      <if test="remitter != null">
+        REMITTER,
+      </if>
+      <if test="drawee != null">
+        DRAWEE,
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE,
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE,
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE,
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE,
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS,
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS,
+      </if>
+      <if test="interest != null">
+        INTEREST,
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST,
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT,
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT,
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG,
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG,
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE,
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="batchId != null">
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.RebuyBillExample" resultType="java.lang.Integer">
+    select count(*) from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update REBUY_BILL
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchId != null">
+        BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberId != null">
+        MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billMoney != null">
+        BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueDate != null">
+        DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      </if>
+      <if test="record.dueMatDate != null">
+        DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="record.issuDate != null">
+        ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      </if>
+      <if test="record.remitter != null">
+        REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drawee != null">
+        DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discBranchCode != null">
+        DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.remainDays != null">
+        REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.interest != null">
+        INTEREST = #{record.interest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueInterest != null">
+        DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settleAmt != null">
+        SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preRelationFlag != null">
+        PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.freeznFlag != null">
+        FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathType != null">
+        GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathDate != null">
+        GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update REBUY_BILL
+    set ID = #{record.id,jdbcType=BIGINT},
+      BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{record.interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{record.billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    <set>
+      <if test="batchId != null">
+        BATCH_ID = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID = #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE = #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        REMITTER = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        DRAWEE = #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        INTEREST = #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE = #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    set BATCH_ID = #{batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{memberId,jdbcType=CHAR},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{issuDate,jdbcType=DATE},
+      REMITTER = #{remitter,jdbcType=VARCHAR},
+      DRAWEE = #{drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{gathDate,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.guo.pojo.RebuyBill">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BATCH_ID" jdbcType="BIGINT" property="batchId" />
+    <result column="MEMBER_ID" jdbcType="CHAR" property="memberId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="BILL_MONEY" jdbcType="DECIMAL" property="billMoney" />
+    <result column="DUE_DATE" jdbcType="DATE" property="dueDate" />
+    <result column="DUE_MAT_DATE" jdbcType="DATE" property="dueMatDate" />
+    <result column="ISSU_DATE" jdbcType="DATE" property="issuDate" />
+    <result column="REMITTER" jdbcType="VARCHAR" property="remitter" />
+    <result column="DRAWEE" jdbcType="VARCHAR" property="drawee" />
+    <result column="ACCEPTOR_BRANCH_CODE" jdbcType="CHAR" property="acceptorBranchCode" />
+    <result column="ACPT_CFM_BRANCH_CODE" jdbcType="CHAR" property="acptCfmBranchCode" />
+    <result column="ACPT_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="acptGuarntrBranchCode" />
+    <result column="DISC_BRANCH_CODE" jdbcType="CHAR" property="discBranchCode" />
+    <result column="DISC_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="discGuarntrBranchCode" />
+    <result column="TRUST_BRANCH_CODE" jdbcType="CHAR" property="trustBranchCode" />
+    <result column="REMAIN_DAYS" jdbcType="INTEGER" property="remainDays" />
+    <result column="DUE_REMAIN_DAYS" jdbcType="INTEGER" property="dueRemainDays" />
+    <result column="INTEREST" jdbcType="DECIMAL" property="interest" />
+    <result column="DUE_INTEREST" jdbcType="DECIMAL" property="dueInterest" />
+    <result column="SETTLE_AMT" jdbcType="DECIMAL" property="settleAmt" />
+    <result column="DUE_SETTLE_AMT" jdbcType="DECIMAL" property="dueSettleAmt" />
+    <result column="SCR_RELATION_FLAG" jdbcType="VARCHAR" property="scrRelationFlag" />
+    <result column="PRE_RELATION_FLAG" jdbcType="VARCHAR" property="preRelationFlag" />
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId" />
+    <result column="FREEZN_FLAG" jdbcType="VARCHAR" property="freeznFlag" />
+    <result column="GATH_TYPE" jdbcType="VARCHAR" property="gathType" />
+    <result column="GATH_DATE" jdbcType="DATE" property="gathDate" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BATCH_ID, MEMBER_ID, BILL_NO, BILL_MONEY, DUE_DATE, DUE_MAT_DATE, ISSU_DATE, 
+    REMITTER, DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, ACPT_GUARNTR_BRANCH_CODE, 
+    DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+    INTEREST, DUE_INTEREST, SETTLE_AMT, DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+    BILL_ID, FREEZN_FLAG, GATH_TYPE, GATH_DATE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.RebuyBillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.RebuyBillExample">
+    delete from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL (ID, BATCH_ID, MEMBER_ID, 
+      BILL_NO, BILL_MONEY, DUE_DATE, 
+      DUE_MAT_DATE, ISSU_DATE, REMITTER, 
+      DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, 
+      ACPT_GUARNTR_BRANCH_CODE, DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, 
+      TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+      INTEREST, DUE_INTEREST, SETTLE_AMT, 
+      DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+      BILL_ID, FREEZN_FLAG, GATH_TYPE, 
+      GATH_DATE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{batchId,jdbcType=BIGINT}, #{memberId,jdbcType=CHAR}, 
+      #{billNo,jdbcType=VARCHAR}, #{billMoney,jdbcType=DECIMAL}, #{dueDate,jdbcType=DATE}, 
+      #{dueMatDate,jdbcType=DATE}, #{issuDate,jdbcType=DATE}, #{remitter,jdbcType=VARCHAR}, 
+      #{drawee,jdbcType=VARCHAR}, #{acceptorBranchCode,jdbcType=CHAR}, #{acptCfmBranchCode,jdbcType=CHAR}, 
+      #{acptGuarntrBranchCode,jdbcType=CHAR}, #{discBranchCode,jdbcType=CHAR}, #{discGuarntrBranchCode,jdbcType=CHAR}, 
+      #{trustBranchCode,jdbcType=CHAR}, #{remainDays,jdbcType=INTEGER}, #{dueRemainDays,jdbcType=INTEGER}, 
+      #{interest,jdbcType=DECIMAL}, #{dueInterest,jdbcType=DECIMAL}, #{settleAmt,jdbcType=DECIMAL}, 
+      #{dueSettleAmt,jdbcType=DECIMAL}, #{scrRelationFlag,jdbcType=VARCHAR}, #{preRelationFlag,jdbcType=VARCHAR}, 
+      #{billId,jdbcType=BIGINT}, #{freeznFlag,jdbcType=VARCHAR}, #{gathType,jdbcType=VARCHAR}, 
+      #{gathDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="batchId != null">
+        BATCH_ID,
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY,
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE,
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE,
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE,
+      </if>
+      <if test="remitter != null">
+        REMITTER,
+      </if>
+      <if test="drawee != null">
+        DRAWEE,
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE,
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE,
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE,
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE,
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS,
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS,
+      </if>
+      <if test="interest != null">
+        INTEREST,
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST,
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT,
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT,
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG,
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG,
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE,
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="batchId != null">
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.RebuyBillExample" resultType="java.lang.Integer">
+    select count(*) from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update REBUY_BILL
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchId != null">
+        BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberId != null">
+        MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billMoney != null">
+        BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueDate != null">
+        DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      </if>
+      <if test="record.dueMatDate != null">
+        DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="record.issuDate != null">
+        ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      </if>
+      <if test="record.remitter != null">
+        REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drawee != null">
+        DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discBranchCode != null">
+        DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.remainDays != null">
+        REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.interest != null">
+        INTEREST = #{record.interest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueInterest != null">
+        DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settleAmt != null">
+        SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preRelationFlag != null">
+        PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.freeznFlag != null">
+        FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathType != null">
+        GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathDate != null">
+        GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update REBUY_BILL
+    set ID = #{record.id,jdbcType=BIGINT},
+      BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{record.interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{record.billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    <set>
+      <if test="batchId != null">
+        BATCH_ID = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID = #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE = #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        REMITTER = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        DRAWEE = #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        INTEREST = #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE = #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    set BATCH_ID = #{batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{memberId,jdbcType=CHAR},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{issuDate,jdbcType=DATE},
+      REMITTER = #{remitter,jdbcType=VARCHAR},
+      DRAWEE = #{drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{gathDate,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.guo.pojo.RebuyBill">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BATCH_ID" jdbcType="BIGINT" property="batchId" />
+    <result column="MEMBER_ID" jdbcType="CHAR" property="memberId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="BILL_MONEY" jdbcType="DECIMAL" property="billMoney" />
+    <result column="DUE_DATE" jdbcType="DATE" property="dueDate" />
+    <result column="DUE_MAT_DATE" jdbcType="DATE" property="dueMatDate" />
+    <result column="ISSU_DATE" jdbcType="DATE" property="issuDate" />
+    <result column="REMITTER" jdbcType="VARCHAR" property="remitter" />
+    <result column="DRAWEE" jdbcType="VARCHAR" property="drawee" />
+    <result column="ACCEPTOR_BRANCH_CODE" jdbcType="CHAR" property="acceptorBranchCode" />
+    <result column="ACPT_CFM_BRANCH_CODE" jdbcType="CHAR" property="acptCfmBranchCode" />
+    <result column="ACPT_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="acptGuarntrBranchCode" />
+    <result column="DISC_BRANCH_CODE" jdbcType="CHAR" property="discBranchCode" />
+    <result column="DISC_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="discGuarntrBranchCode" />
+    <result column="TRUST_BRANCH_CODE" jdbcType="CHAR" property="trustBranchCode" />
+    <result column="REMAIN_DAYS" jdbcType="INTEGER" property="remainDays" />
+    <result column="DUE_REMAIN_DAYS" jdbcType="INTEGER" property="dueRemainDays" />
+    <result column="INTEREST" jdbcType="DECIMAL" property="interest" />
+    <result column="DUE_INTEREST" jdbcType="DECIMAL" property="dueInterest" />
+    <result column="SETTLE_AMT" jdbcType="DECIMAL" property="settleAmt" />
+    <result column="DUE_SETTLE_AMT" jdbcType="DECIMAL" property="dueSettleAmt" />
+    <result column="SCR_RELATION_FLAG" jdbcType="VARCHAR" property="scrRelationFlag" />
+    <result column="PRE_RELATION_FLAG" jdbcType="VARCHAR" property="preRelationFlag" />
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId" />
+    <result column="FREEZN_FLAG" jdbcType="VARCHAR" property="freeznFlag" />
+    <result column="GATH_TYPE" jdbcType="VARCHAR" property="gathType" />
+    <result column="GATH_DATE" jdbcType="DATE" property="gathDate" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BATCH_ID, MEMBER_ID, BILL_NO, BILL_MONEY, DUE_DATE, DUE_MAT_DATE, ISSU_DATE, 
+    REMITTER, DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, ACPT_GUARNTR_BRANCH_CODE, 
+    DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+    INTEREST, DUE_INTEREST, SETTLE_AMT, DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+    BILL_ID, FREEZN_FLAG, GATH_TYPE, GATH_DATE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.RebuyBillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.RebuyBillExample">
+    delete from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL (ID, BATCH_ID, MEMBER_ID, 
+      BILL_NO, BILL_MONEY, DUE_DATE, 
+      DUE_MAT_DATE, ISSU_DATE, REMITTER, 
+      DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, 
+      ACPT_GUARNTR_BRANCH_CODE, DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, 
+      TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+      INTEREST, DUE_INTEREST, SETTLE_AMT, 
+      DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+      BILL_ID, FREEZN_FLAG, GATH_TYPE, 
+      GATH_DATE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{batchId,jdbcType=BIGINT}, #{memberId,jdbcType=CHAR}, 
+      #{billNo,jdbcType=VARCHAR}, #{billMoney,jdbcType=DECIMAL}, #{dueDate,jdbcType=DATE}, 
+      #{dueMatDate,jdbcType=DATE}, #{issuDate,jdbcType=DATE}, #{remitter,jdbcType=VARCHAR}, 
+      #{drawee,jdbcType=VARCHAR}, #{acceptorBranchCode,jdbcType=CHAR}, #{acptCfmBranchCode,jdbcType=CHAR}, 
+      #{acptGuarntrBranchCode,jdbcType=CHAR}, #{discBranchCode,jdbcType=CHAR}, #{discGuarntrBranchCode,jdbcType=CHAR}, 
+      #{trustBranchCode,jdbcType=CHAR}, #{remainDays,jdbcType=INTEGER}, #{dueRemainDays,jdbcType=INTEGER}, 
+      #{interest,jdbcType=DECIMAL}, #{dueInterest,jdbcType=DECIMAL}, #{settleAmt,jdbcType=DECIMAL}, 
+      #{dueSettleAmt,jdbcType=DECIMAL}, #{scrRelationFlag,jdbcType=VARCHAR}, #{preRelationFlag,jdbcType=VARCHAR}, 
+      #{billId,jdbcType=BIGINT}, #{freeznFlag,jdbcType=VARCHAR}, #{gathType,jdbcType=VARCHAR}, 
+      #{gathDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="batchId != null">
+        BATCH_ID,
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY,
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE,
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE,
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE,
+      </if>
+      <if test="remitter != null">
+        REMITTER,
+      </if>
+      <if test="drawee != null">
+        DRAWEE,
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE,
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE,
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE,
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE,
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS,
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS,
+      </if>
+      <if test="interest != null">
+        INTEREST,
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST,
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT,
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT,
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG,
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG,
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE,
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="batchId != null">
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.RebuyBillExample" resultType="java.lang.Integer">
+    select count(*) from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update REBUY_BILL
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchId != null">
+        BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberId != null">
+        MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billMoney != null">
+        BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueDate != null">
+        DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      </if>
+      <if test="record.dueMatDate != null">
+        DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="record.issuDate != null">
+        ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      </if>
+      <if test="record.remitter != null">
+        REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drawee != null">
+        DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discBranchCode != null">
+        DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.remainDays != null">
+        REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.interest != null">
+        INTEREST = #{record.interest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueInterest != null">
+        DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settleAmt != null">
+        SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preRelationFlag != null">
+        PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.freeznFlag != null">
+        FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathType != null">
+        GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathDate != null">
+        GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update REBUY_BILL
+    set ID = #{record.id,jdbcType=BIGINT},
+      BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{record.interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{record.billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    <set>
+      <if test="batchId != null">
+        BATCH_ID = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID = #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE = #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        REMITTER = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        DRAWEE = #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        INTEREST = #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE = #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    set BATCH_ID = #{batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{memberId,jdbcType=CHAR},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{issuDate,jdbcType=DATE},
+      REMITTER = #{remitter,jdbcType=VARCHAR},
+      DRAWEE = #{drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{gathDate,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.guo.pojo.RebuyBill">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BATCH_ID" jdbcType="BIGINT" property="batchId" />
+    <result column="MEMBER_ID" jdbcType="CHAR" property="memberId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="BILL_MONEY" jdbcType="DECIMAL" property="billMoney" />
+    <result column="DUE_DATE" jdbcType="DATE" property="dueDate" />
+    <result column="DUE_MAT_DATE" jdbcType="DATE" property="dueMatDate" />
+    <result column="ISSU_DATE" jdbcType="DATE" property="issuDate" />
+    <result column="REMITTER" jdbcType="VARCHAR" property="remitter" />
+    <result column="DRAWEE" jdbcType="VARCHAR" property="drawee" />
+    <result column="ACCEPTOR_BRANCH_CODE" jdbcType="CHAR" property="acceptorBranchCode" />
+    <result column="ACPT_CFM_BRANCH_CODE" jdbcType="CHAR" property="acptCfmBranchCode" />
+    <result column="ACPT_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="acptGuarntrBranchCode" />
+    <result column="DISC_BRANCH_CODE" jdbcType="CHAR" property="discBranchCode" />
+    <result column="DISC_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="discGuarntrBranchCode" />
+    <result column="TRUST_BRANCH_CODE" jdbcType="CHAR" property="trustBranchCode" />
+    <result column="REMAIN_DAYS" jdbcType="INTEGER" property="remainDays" />
+    <result column="DUE_REMAIN_DAYS" jdbcType="INTEGER" property="dueRemainDays" />
+    <result column="INTEREST" jdbcType="DECIMAL" property="interest" />
+    <result column="DUE_INTEREST" jdbcType="DECIMAL" property="dueInterest" />
+    <result column="SETTLE_AMT" jdbcType="DECIMAL" property="settleAmt" />
+    <result column="DUE_SETTLE_AMT" jdbcType="DECIMAL" property="dueSettleAmt" />
+    <result column="SCR_RELATION_FLAG" jdbcType="VARCHAR" property="scrRelationFlag" />
+    <result column="PRE_RELATION_FLAG" jdbcType="VARCHAR" property="preRelationFlag" />
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId" />
+    <result column="FREEZN_FLAG" jdbcType="VARCHAR" property="freeznFlag" />
+    <result column="GATH_TYPE" jdbcType="VARCHAR" property="gathType" />
+    <result column="GATH_DATE" jdbcType="DATE" property="gathDate" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BATCH_ID, MEMBER_ID, BILL_NO, BILL_MONEY, DUE_DATE, DUE_MAT_DATE, ISSU_DATE, 
+    REMITTER, DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, ACPT_GUARNTR_BRANCH_CODE, 
+    DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+    INTEREST, DUE_INTEREST, SETTLE_AMT, DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+    BILL_ID, FREEZN_FLAG, GATH_TYPE, GATH_DATE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.RebuyBillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.RebuyBillExample">
+    delete from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL (ID, BATCH_ID, MEMBER_ID, 
+      BILL_NO, BILL_MONEY, DUE_DATE, 
+      DUE_MAT_DATE, ISSU_DATE, REMITTER, 
+      DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, 
+      ACPT_GUARNTR_BRANCH_CODE, DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, 
+      TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+      INTEREST, DUE_INTEREST, SETTLE_AMT, 
+      DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+      BILL_ID, FREEZN_FLAG, GATH_TYPE, 
+      GATH_DATE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{batchId,jdbcType=BIGINT}, #{memberId,jdbcType=CHAR}, 
+      #{billNo,jdbcType=VARCHAR}, #{billMoney,jdbcType=DECIMAL}, #{dueDate,jdbcType=DATE}, 
+      #{dueMatDate,jdbcType=DATE}, #{issuDate,jdbcType=DATE}, #{remitter,jdbcType=VARCHAR}, 
+      #{drawee,jdbcType=VARCHAR}, #{acceptorBranchCode,jdbcType=CHAR}, #{acptCfmBranchCode,jdbcType=CHAR}, 
+      #{acptGuarntrBranchCode,jdbcType=CHAR}, #{discBranchCode,jdbcType=CHAR}, #{discGuarntrBranchCode,jdbcType=CHAR}, 
+      #{trustBranchCode,jdbcType=CHAR}, #{remainDays,jdbcType=INTEGER}, #{dueRemainDays,jdbcType=INTEGER}, 
+      #{interest,jdbcType=DECIMAL}, #{dueInterest,jdbcType=DECIMAL}, #{settleAmt,jdbcType=DECIMAL}, 
+      #{dueSettleAmt,jdbcType=DECIMAL}, #{scrRelationFlag,jdbcType=VARCHAR}, #{preRelationFlag,jdbcType=VARCHAR}, 
+      #{billId,jdbcType=BIGINT}, #{freeznFlag,jdbcType=VARCHAR}, #{gathType,jdbcType=VARCHAR}, 
+      #{gathDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="batchId != null">
+        BATCH_ID,
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY,
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE,
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE,
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE,
+      </if>
+      <if test="remitter != null">
+        REMITTER,
+      </if>
+      <if test="drawee != null">
+        DRAWEE,
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE,
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE,
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE,
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE,
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS,
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS,
+      </if>
+      <if test="interest != null">
+        INTEREST,
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST,
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT,
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT,
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG,
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG,
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE,
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="batchId != null">
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.RebuyBillExample" resultType="java.lang.Integer">
+    select count(*) from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update REBUY_BILL
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchId != null">
+        BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberId != null">
+        MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billMoney != null">
+        BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueDate != null">
+        DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      </if>
+      <if test="record.dueMatDate != null">
+        DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="record.issuDate != null">
+        ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      </if>
+      <if test="record.remitter != null">
+        REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drawee != null">
+        DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discBranchCode != null">
+        DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.remainDays != null">
+        REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.interest != null">
+        INTEREST = #{record.interest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueInterest != null">
+        DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settleAmt != null">
+        SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preRelationFlag != null">
+        PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.freeznFlag != null">
+        FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathType != null">
+        GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathDate != null">
+        GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update REBUY_BILL
+    set ID = #{record.id,jdbcType=BIGINT},
+      BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{record.interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{record.billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    <set>
+      <if test="batchId != null">
+        BATCH_ID = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID = #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE = #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        REMITTER = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        DRAWEE = #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        INTEREST = #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE = #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    set BATCH_ID = #{batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{memberId,jdbcType=CHAR},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{issuDate,jdbcType=DATE},
+      REMITTER = #{remitter,jdbcType=VARCHAR},
+      DRAWEE = #{drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{gathDate,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.guo.pojo.RebuyBill">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BATCH_ID" jdbcType="BIGINT" property="batchId" />
+    <result column="MEMBER_ID" jdbcType="CHAR" property="memberId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="BILL_MONEY" jdbcType="DECIMAL" property="billMoney" />
+    <result column="DUE_DATE" jdbcType="DATE" property="dueDate" />
+    <result column="DUE_MAT_DATE" jdbcType="DATE" property="dueMatDate" />
+    <result column="ISSU_DATE" jdbcType="DATE" property="issuDate" />
+    <result column="REMITTER" jdbcType="VARCHAR" property="remitter" />
+    <result column="DRAWEE" jdbcType="VARCHAR" property="drawee" />
+    <result column="ACCEPTOR_BRANCH_CODE" jdbcType="CHAR" property="acceptorBranchCode" />
+    <result column="ACPT_CFM_BRANCH_CODE" jdbcType="CHAR" property="acptCfmBranchCode" />
+    <result column="ACPT_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="acptGuarntrBranchCode" />
+    <result column="DISC_BRANCH_CODE" jdbcType="CHAR" property="discBranchCode" />
+    <result column="DISC_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="discGuarntrBranchCode" />
+    <result column="TRUST_BRANCH_CODE" jdbcType="CHAR" property="trustBranchCode" />
+    <result column="REMAIN_DAYS" jdbcType="INTEGER" property="remainDays" />
+    <result column="DUE_REMAIN_DAYS" jdbcType="INTEGER" property="dueRemainDays" />
+    <result column="INTEREST" jdbcType="DECIMAL" property="interest" />
+    <result column="DUE_INTEREST" jdbcType="DECIMAL" property="dueInterest" />
+    <result column="SETTLE_AMT" jdbcType="DECIMAL" property="settleAmt" />
+    <result column="DUE_SETTLE_AMT" jdbcType="DECIMAL" property="dueSettleAmt" />
+    <result column="SCR_RELATION_FLAG" jdbcType="VARCHAR" property="scrRelationFlag" />
+    <result column="PRE_RELATION_FLAG" jdbcType="VARCHAR" property="preRelationFlag" />
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId" />
+    <result column="FREEZN_FLAG" jdbcType="VARCHAR" property="freeznFlag" />
+    <result column="GATH_TYPE" jdbcType="VARCHAR" property="gathType" />
+    <result column="GATH_DATE" jdbcType="DATE" property="gathDate" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BATCH_ID, MEMBER_ID, BILL_NO, BILL_MONEY, DUE_DATE, DUE_MAT_DATE, ISSU_DATE, 
+    REMITTER, DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, ACPT_GUARNTR_BRANCH_CODE, 
+    DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+    INTEREST, DUE_INTEREST, SETTLE_AMT, DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+    BILL_ID, FREEZN_FLAG, GATH_TYPE, GATH_DATE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.RebuyBillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.RebuyBillExample">
+    delete from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL (ID, BATCH_ID, MEMBER_ID, 
+      BILL_NO, BILL_MONEY, DUE_DATE, 
+      DUE_MAT_DATE, ISSU_DATE, REMITTER, 
+      DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, 
+      ACPT_GUARNTR_BRANCH_CODE, DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, 
+      TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+      INTEREST, DUE_INTEREST, SETTLE_AMT, 
+      DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+      BILL_ID, FREEZN_FLAG, GATH_TYPE, 
+      GATH_DATE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{batchId,jdbcType=BIGINT}, #{memberId,jdbcType=CHAR}, 
+      #{billNo,jdbcType=VARCHAR}, #{billMoney,jdbcType=DECIMAL}, #{dueDate,jdbcType=DATE}, 
+      #{dueMatDate,jdbcType=DATE}, #{issuDate,jdbcType=DATE}, #{remitter,jdbcType=VARCHAR}, 
+      #{drawee,jdbcType=VARCHAR}, #{acceptorBranchCode,jdbcType=CHAR}, #{acptCfmBranchCode,jdbcType=CHAR}, 
+      #{acptGuarntrBranchCode,jdbcType=CHAR}, #{discBranchCode,jdbcType=CHAR}, #{discGuarntrBranchCode,jdbcType=CHAR}, 
+      #{trustBranchCode,jdbcType=CHAR}, #{remainDays,jdbcType=INTEGER}, #{dueRemainDays,jdbcType=INTEGER}, 
+      #{interest,jdbcType=DECIMAL}, #{dueInterest,jdbcType=DECIMAL}, #{settleAmt,jdbcType=DECIMAL}, 
+      #{dueSettleAmt,jdbcType=DECIMAL}, #{scrRelationFlag,jdbcType=VARCHAR}, #{preRelationFlag,jdbcType=VARCHAR}, 
+      #{billId,jdbcType=BIGINT}, #{freeznFlag,jdbcType=VARCHAR}, #{gathType,jdbcType=VARCHAR}, 
+      #{gathDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="batchId != null">
+        BATCH_ID,
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY,
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE,
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE,
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE,
+      </if>
+      <if test="remitter != null">
+        REMITTER,
+      </if>
+      <if test="drawee != null">
+        DRAWEE,
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE,
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE,
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE,
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE,
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS,
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS,
+      </if>
+      <if test="interest != null">
+        INTEREST,
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST,
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT,
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT,
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG,
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG,
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE,
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="batchId != null">
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.RebuyBillExample" resultType="java.lang.Integer">
+    select count(*) from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update REBUY_BILL
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchId != null">
+        BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberId != null">
+        MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billMoney != null">
+        BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueDate != null">
+        DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      </if>
+      <if test="record.dueMatDate != null">
+        DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="record.issuDate != null">
+        ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      </if>
+      <if test="record.remitter != null">
+        REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drawee != null">
+        DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discBranchCode != null">
+        DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.remainDays != null">
+        REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.interest != null">
+        INTEREST = #{record.interest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueInterest != null">
+        DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settleAmt != null">
+        SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preRelationFlag != null">
+        PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.freeznFlag != null">
+        FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathType != null">
+        GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathDate != null">
+        GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update REBUY_BILL
+    set ID = #{record.id,jdbcType=BIGINT},
+      BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{record.interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{record.billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    <set>
+      <if test="batchId != null">
+        BATCH_ID = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID = #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE = #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        REMITTER = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        DRAWEE = #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        INTEREST = #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE = #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    set BATCH_ID = #{batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{memberId,jdbcType=CHAR},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{issuDate,jdbcType=DATE},
+      REMITTER = #{remitter,jdbcType=VARCHAR},
+      DRAWEE = #{drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{gathDate,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.guo.pojo.RebuyBill">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BATCH_ID" jdbcType="BIGINT" property="batchId" />
+    <result column="MEMBER_ID" jdbcType="CHAR" property="memberId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="BILL_MONEY" jdbcType="DECIMAL" property="billMoney" />
+    <result column="DUE_DATE" jdbcType="DATE" property="dueDate" />
+    <result column="DUE_MAT_DATE" jdbcType="DATE" property="dueMatDate" />
+    <result column="ISSU_DATE" jdbcType="DATE" property="issuDate" />
+    <result column="REMITTER" jdbcType="VARCHAR" property="remitter" />
+    <result column="DRAWEE" jdbcType="VARCHAR" property="drawee" />
+    <result column="ACCEPTOR_BRANCH_CODE" jdbcType="CHAR" property="acceptorBranchCode" />
+    <result column="ACPT_CFM_BRANCH_CODE" jdbcType="CHAR" property="acptCfmBranchCode" />
+    <result column="ACPT_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="acptGuarntrBranchCode" />
+    <result column="DISC_BRANCH_CODE" jdbcType="CHAR" property="discBranchCode" />
+    <result column="DISC_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="discGuarntrBranchCode" />
+    <result column="TRUST_BRANCH_CODE" jdbcType="CHAR" property="trustBranchCode" />
+    <result column="REMAIN_DAYS" jdbcType="INTEGER" property="remainDays" />
+    <result column="DUE_REMAIN_DAYS" jdbcType="INTEGER" property="dueRemainDays" />
+    <result column="INTEREST" jdbcType="DECIMAL" property="interest" />
+    <result column="DUE_INTEREST" jdbcType="DECIMAL" property="dueInterest" />
+    <result column="SETTLE_AMT" jdbcType="DECIMAL" property="settleAmt" />
+    <result column="DUE_SETTLE_AMT" jdbcType="DECIMAL" property="dueSettleAmt" />
+    <result column="SCR_RELATION_FLAG" jdbcType="VARCHAR" property="scrRelationFlag" />
+    <result column="PRE_RELATION_FLAG" jdbcType="VARCHAR" property="preRelationFlag" />
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId" />
+    <result column="FREEZN_FLAG" jdbcType="VARCHAR" property="freeznFlag" />
+    <result column="GATH_TYPE" jdbcType="VARCHAR" property="gathType" />
+    <result column="GATH_DATE" jdbcType="DATE" property="gathDate" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BATCH_ID, MEMBER_ID, BILL_NO, BILL_MONEY, DUE_DATE, DUE_MAT_DATE, ISSU_DATE, 
+    REMITTER, DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, ACPT_GUARNTR_BRANCH_CODE, 
+    DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+    INTEREST, DUE_INTEREST, SETTLE_AMT, DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+    BILL_ID, FREEZN_FLAG, GATH_TYPE, GATH_DATE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.RebuyBillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.RebuyBillExample">
+    delete from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL (ID, BATCH_ID, MEMBER_ID, 
+      BILL_NO, BILL_MONEY, DUE_DATE, 
+      DUE_MAT_DATE, ISSU_DATE, REMITTER, 
+      DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, 
+      ACPT_GUARNTR_BRANCH_CODE, DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, 
+      TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+      INTEREST, DUE_INTEREST, SETTLE_AMT, 
+      DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+      BILL_ID, FREEZN_FLAG, GATH_TYPE, 
+      GATH_DATE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{batchId,jdbcType=BIGINT}, #{memberId,jdbcType=CHAR}, 
+      #{billNo,jdbcType=VARCHAR}, #{billMoney,jdbcType=DECIMAL}, #{dueDate,jdbcType=DATE}, 
+      #{dueMatDate,jdbcType=DATE}, #{issuDate,jdbcType=DATE}, #{remitter,jdbcType=VARCHAR}, 
+      #{drawee,jdbcType=VARCHAR}, #{acceptorBranchCode,jdbcType=CHAR}, #{acptCfmBranchCode,jdbcType=CHAR}, 
+      #{acptGuarntrBranchCode,jdbcType=CHAR}, #{discBranchCode,jdbcType=CHAR}, #{discGuarntrBranchCode,jdbcType=CHAR}, 
+      #{trustBranchCode,jdbcType=CHAR}, #{remainDays,jdbcType=INTEGER}, #{dueRemainDays,jdbcType=INTEGER}, 
+      #{interest,jdbcType=DECIMAL}, #{dueInterest,jdbcType=DECIMAL}, #{settleAmt,jdbcType=DECIMAL}, 
+      #{dueSettleAmt,jdbcType=DECIMAL}, #{scrRelationFlag,jdbcType=VARCHAR}, #{preRelationFlag,jdbcType=VARCHAR}, 
+      #{billId,jdbcType=BIGINT}, #{freeznFlag,jdbcType=VARCHAR}, #{gathType,jdbcType=VARCHAR}, 
+      #{gathDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="batchId != null">
+        BATCH_ID,
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY,
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE,
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE,
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE,
+      </if>
+      <if test="remitter != null">
+        REMITTER,
+      </if>
+      <if test="drawee != null">
+        DRAWEE,
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE,
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE,
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE,
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE,
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS,
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS,
+      </if>
+      <if test="interest != null">
+        INTEREST,
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST,
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT,
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT,
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG,
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG,
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE,
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="batchId != null">
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.RebuyBillExample" resultType="java.lang.Integer">
+    select count(*) from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update REBUY_BILL
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchId != null">
+        BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberId != null">
+        MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billMoney != null">
+        BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueDate != null">
+        DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      </if>
+      <if test="record.dueMatDate != null">
+        DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="record.issuDate != null">
+        ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      </if>
+      <if test="record.remitter != null">
+        REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drawee != null">
+        DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discBranchCode != null">
+        DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.remainDays != null">
+        REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.interest != null">
+        INTEREST = #{record.interest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueInterest != null">
+        DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settleAmt != null">
+        SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preRelationFlag != null">
+        PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.freeznFlag != null">
+        FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathType != null">
+        GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathDate != null">
+        GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update REBUY_BILL
+    set ID = #{record.id,jdbcType=BIGINT},
+      BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{record.interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{record.billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    <set>
+      <if test="batchId != null">
+        BATCH_ID = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID = #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE = #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        REMITTER = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        DRAWEE = #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        INTEREST = #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE = #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    set BATCH_ID = #{batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{memberId,jdbcType=CHAR},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{issuDate,jdbcType=DATE},
+      REMITTER = #{remitter,jdbcType=VARCHAR},
+      DRAWEE = #{drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{gathDate,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.guo.pojo.RebuyBill">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BATCH_ID" jdbcType="BIGINT" property="batchId" />
+    <result column="MEMBER_ID" jdbcType="CHAR" property="memberId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="BILL_MONEY" jdbcType="DECIMAL" property="billMoney" />
+    <result column="DUE_DATE" jdbcType="DATE" property="dueDate" />
+    <result column="DUE_MAT_DATE" jdbcType="DATE" property="dueMatDate" />
+    <result column="ISSU_DATE" jdbcType="DATE" property="issuDate" />
+    <result column="REMITTER" jdbcType="VARCHAR" property="remitter" />
+    <result column="DRAWEE" jdbcType="VARCHAR" property="drawee" />
+    <result column="ACCEPTOR_BRANCH_CODE" jdbcType="CHAR" property="acceptorBranchCode" />
+    <result column="ACPT_CFM_BRANCH_CODE" jdbcType="CHAR" property="acptCfmBranchCode" />
+    <result column="ACPT_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="acptGuarntrBranchCode" />
+    <result column="DISC_BRANCH_CODE" jdbcType="CHAR" property="discBranchCode" />
+    <result column="DISC_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="discGuarntrBranchCode" />
+    <result column="TRUST_BRANCH_CODE" jdbcType="CHAR" property="trustBranchCode" />
+    <result column="REMAIN_DAYS" jdbcType="INTEGER" property="remainDays" />
+    <result column="DUE_REMAIN_DAYS" jdbcType="INTEGER" property="dueRemainDays" />
+    <result column="INTEREST" jdbcType="DECIMAL" property="interest" />
+    <result column="DUE_INTEREST" jdbcType="DECIMAL" property="dueInterest" />
+    <result column="SETTLE_AMT" jdbcType="DECIMAL" property="settleAmt" />
+    <result column="DUE_SETTLE_AMT" jdbcType="DECIMAL" property="dueSettleAmt" />
+    <result column="SCR_RELATION_FLAG" jdbcType="VARCHAR" property="scrRelationFlag" />
+    <result column="PRE_RELATION_FLAG" jdbcType="VARCHAR" property="preRelationFlag" />
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId" />
+    <result column="FREEZN_FLAG" jdbcType="VARCHAR" property="freeznFlag" />
+    <result column="GATH_TYPE" jdbcType="VARCHAR" property="gathType" />
+    <result column="GATH_DATE" jdbcType="DATE" property="gathDate" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BATCH_ID, MEMBER_ID, BILL_NO, BILL_MONEY, DUE_DATE, DUE_MAT_DATE, ISSU_DATE, 
+    REMITTER, DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, ACPT_GUARNTR_BRANCH_CODE, 
+    DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+    INTEREST, DUE_INTEREST, SETTLE_AMT, DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+    BILL_ID, FREEZN_FLAG, GATH_TYPE, GATH_DATE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.RebuyBillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.RebuyBillExample">
+    delete from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL (ID, BATCH_ID, MEMBER_ID, 
+      BILL_NO, BILL_MONEY, DUE_DATE, 
+      DUE_MAT_DATE, ISSU_DATE, REMITTER, 
+      DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, 
+      ACPT_GUARNTR_BRANCH_CODE, DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, 
+      TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+      INTEREST, DUE_INTEREST, SETTLE_AMT, 
+      DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+      BILL_ID, FREEZN_FLAG, GATH_TYPE, 
+      GATH_DATE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{batchId,jdbcType=BIGINT}, #{memberId,jdbcType=CHAR}, 
+      #{billNo,jdbcType=VARCHAR}, #{billMoney,jdbcType=DECIMAL}, #{dueDate,jdbcType=DATE}, 
+      #{dueMatDate,jdbcType=DATE}, #{issuDate,jdbcType=DATE}, #{remitter,jdbcType=VARCHAR}, 
+      #{drawee,jdbcType=VARCHAR}, #{acceptorBranchCode,jdbcType=CHAR}, #{acptCfmBranchCode,jdbcType=CHAR}, 
+      #{acptGuarntrBranchCode,jdbcType=CHAR}, #{discBranchCode,jdbcType=CHAR}, #{discGuarntrBranchCode,jdbcType=CHAR}, 
+      #{trustBranchCode,jdbcType=CHAR}, #{remainDays,jdbcType=INTEGER}, #{dueRemainDays,jdbcType=INTEGER}, 
+      #{interest,jdbcType=DECIMAL}, #{dueInterest,jdbcType=DECIMAL}, #{settleAmt,jdbcType=DECIMAL}, 
+      #{dueSettleAmt,jdbcType=DECIMAL}, #{scrRelationFlag,jdbcType=VARCHAR}, #{preRelationFlag,jdbcType=VARCHAR}, 
+      #{billId,jdbcType=BIGINT}, #{freeznFlag,jdbcType=VARCHAR}, #{gathType,jdbcType=VARCHAR}, 
+      #{gathDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="batchId != null">
+        BATCH_ID,
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY,
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE,
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE,
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE,
+      </if>
+      <if test="remitter != null">
+        REMITTER,
+      </if>
+      <if test="drawee != null">
+        DRAWEE,
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE,
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE,
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE,
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE,
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS,
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS,
+      </if>
+      <if test="interest != null">
+        INTEREST,
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST,
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT,
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT,
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG,
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG,
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE,
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="batchId != null">
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.RebuyBillExample" resultType="java.lang.Integer">
+    select count(*) from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update REBUY_BILL
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchId != null">
+        BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberId != null">
+        MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billMoney != null">
+        BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueDate != null">
+        DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      </if>
+      <if test="record.dueMatDate != null">
+        DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="record.issuDate != null">
+        ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      </if>
+      <if test="record.remitter != null">
+        REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drawee != null">
+        DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discBranchCode != null">
+        DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.remainDays != null">
+        REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.interest != null">
+        INTEREST = #{record.interest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueInterest != null">
+        DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settleAmt != null">
+        SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preRelationFlag != null">
+        PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.freeznFlag != null">
+        FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathType != null">
+        GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathDate != null">
+        GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update REBUY_BILL
+    set ID = #{record.id,jdbcType=BIGINT},
+      BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{record.interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{record.billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    <set>
+      <if test="batchId != null">
+        BATCH_ID = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID = #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE = #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        REMITTER = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        DRAWEE = #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        INTEREST = #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE = #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    set BATCH_ID = #{batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{memberId,jdbcType=CHAR},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{issuDate,jdbcType=DATE},
+      REMITTER = #{remitter,jdbcType=VARCHAR},
+      DRAWEE = #{drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{gathDate,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.guo.pojo.RebuyBill">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BATCH_ID" jdbcType="BIGINT" property="batchId" />
+    <result column="MEMBER_ID" jdbcType="CHAR" property="memberId" />
+    <result column="BILL_NO" jdbcType="VARCHAR" property="billNo" />
+    <result column="BILL_MONEY" jdbcType="DECIMAL" property="billMoney" />
+    <result column="DUE_DATE" jdbcType="DATE" property="dueDate" />
+    <result column="DUE_MAT_DATE" jdbcType="DATE" property="dueMatDate" />
+    <result column="ISSU_DATE" jdbcType="DATE" property="issuDate" />
+    <result column="REMITTER" jdbcType="VARCHAR" property="remitter" />
+    <result column="DRAWEE" jdbcType="VARCHAR" property="drawee" />
+    <result column="ACCEPTOR_BRANCH_CODE" jdbcType="CHAR" property="acceptorBranchCode" />
+    <result column="ACPT_CFM_BRANCH_CODE" jdbcType="CHAR" property="acptCfmBranchCode" />
+    <result column="ACPT_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="acptGuarntrBranchCode" />
+    <result column="DISC_BRANCH_CODE" jdbcType="CHAR" property="discBranchCode" />
+    <result column="DISC_GUARNTR_BRANCH_CODE" jdbcType="CHAR" property="discGuarntrBranchCode" />
+    <result column="TRUST_BRANCH_CODE" jdbcType="CHAR" property="trustBranchCode" />
+    <result column="REMAIN_DAYS" jdbcType="INTEGER" property="remainDays" />
+    <result column="DUE_REMAIN_DAYS" jdbcType="INTEGER" property="dueRemainDays" />
+    <result column="INTEREST" jdbcType="DECIMAL" property="interest" />
+    <result column="DUE_INTEREST" jdbcType="DECIMAL" property="dueInterest" />
+    <result column="SETTLE_AMT" jdbcType="DECIMAL" property="settleAmt" />
+    <result column="DUE_SETTLE_AMT" jdbcType="DECIMAL" property="dueSettleAmt" />
+    <result column="SCR_RELATION_FLAG" jdbcType="VARCHAR" property="scrRelationFlag" />
+    <result column="PRE_RELATION_FLAG" jdbcType="VARCHAR" property="preRelationFlag" />
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId" />
+    <result column="FREEZN_FLAG" jdbcType="VARCHAR" property="freeznFlag" />
+    <result column="GATH_TYPE" jdbcType="VARCHAR" property="gathType" />
+    <result column="GATH_DATE" jdbcType="DATE" property="gathDate" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BATCH_ID, MEMBER_ID, BILL_NO, BILL_MONEY, DUE_DATE, DUE_MAT_DATE, ISSU_DATE, 
+    REMITTER, DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, ACPT_GUARNTR_BRANCH_CODE, 
+    DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+    INTEREST, DUE_INTEREST, SETTLE_AMT, DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+    BILL_ID, FREEZN_FLAG, GATH_TYPE, GATH_DATE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.guo.pojo.RebuyBillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from REBUY_BILL
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guo.pojo.RebuyBillExample">
+    delete from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL (ID, BATCH_ID, MEMBER_ID, 
+      BILL_NO, BILL_MONEY, DUE_DATE, 
+      DUE_MAT_DATE, ISSU_DATE, REMITTER, 
+      DRAWEE, ACCEPTOR_BRANCH_CODE, ACPT_CFM_BRANCH_CODE, 
+      ACPT_GUARNTR_BRANCH_CODE, DISC_BRANCH_CODE, DISC_GUARNTR_BRANCH_CODE, 
+      TRUST_BRANCH_CODE, REMAIN_DAYS, DUE_REMAIN_DAYS, 
+      INTEREST, DUE_INTEREST, SETTLE_AMT, 
+      DUE_SETTLE_AMT, SCR_RELATION_FLAG, PRE_RELATION_FLAG, 
+      BILL_ID, FREEZN_FLAG, GATH_TYPE, 
+      GATH_DATE, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=BIGINT}, #{batchId,jdbcType=BIGINT}, #{memberId,jdbcType=CHAR}, 
+      #{billNo,jdbcType=VARCHAR}, #{billMoney,jdbcType=DECIMAL}, #{dueDate,jdbcType=DATE}, 
+      #{dueMatDate,jdbcType=DATE}, #{issuDate,jdbcType=DATE}, #{remitter,jdbcType=VARCHAR}, 
+      #{drawee,jdbcType=VARCHAR}, #{acceptorBranchCode,jdbcType=CHAR}, #{acptCfmBranchCode,jdbcType=CHAR}, 
+      #{acptGuarntrBranchCode,jdbcType=CHAR}, #{discBranchCode,jdbcType=CHAR}, #{discGuarntrBranchCode,jdbcType=CHAR}, 
+      #{trustBranchCode,jdbcType=CHAR}, #{remainDays,jdbcType=INTEGER}, #{dueRemainDays,jdbcType=INTEGER}, 
+      #{interest,jdbcType=DECIMAL}, #{dueInterest,jdbcType=DECIMAL}, #{settleAmt,jdbcType=DECIMAL}, 
+      #{dueSettleAmt,jdbcType=DECIMAL}, #{scrRelationFlag,jdbcType=VARCHAR}, #{preRelationFlag,jdbcType=VARCHAR}, 
+      #{billId,jdbcType=BIGINT}, #{freeznFlag,jdbcType=VARCHAR}, #{gathType,jdbcType=VARCHAR}, 
+      #{gathDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guo.pojo.RebuyBill">
+    insert into REBUY_BILL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="batchId != null">
+        BATCH_ID,
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID,
+      </if>
+      <if test="billNo != null">
+        BILL_NO,
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY,
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE,
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE,
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE,
+      </if>
+      <if test="remitter != null">
+        REMITTER,
+      </if>
+      <if test="drawee != null">
+        DRAWEE,
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE,
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE,
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE,
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE,
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE,
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS,
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS,
+      </if>
+      <if test="interest != null">
+        INTEREST,
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST,
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT,
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT,
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG,
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG,
+      </if>
+      <if test="billId != null">
+        BILL_ID,
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG,
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE,
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="batchId != null">
+        #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guo.pojo.RebuyBillExample" resultType="java.lang.Integer">
+    select count(*) from REBUY_BILL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update REBUY_BILL
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchId != null">
+        BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberId != null">
+        MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      </if>
+      <if test="record.billNo != null">
+        BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billMoney != null">
+        BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueDate != null">
+        DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      </if>
+      <if test="record.dueMatDate != null">
+        DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="record.issuDate != null">
+        ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      </if>
+      <if test="record.remitter != null">
+        REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drawee != null">
+        DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discBranchCode != null">
+        DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="record.remainDays != null">
+        REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.interest != null">
+        INTEREST = #{record.interest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueInterest != null">
+        DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settleAmt != null">
+        SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preRelationFlag != null">
+        PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.freeznFlag != null">
+        FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathType != null">
+        GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gathDate != null">
+        GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update REBUY_BILL
+    set ID = #{record.id,jdbcType=BIGINT},
+      BATCH_ID = #{record.batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{record.memberId,jdbcType=CHAR},
+      BILL_NO = #{record.billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{record.billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{record.dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{record.dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{record.issuDate,jdbcType=DATE},
+      REMITTER = #{record.remitter,jdbcType=VARCHAR},
+      DRAWEE = #{record.drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{record.acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{record.acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{record.acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{record.discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{record.discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{record.trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{record.remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{record.dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{record.interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{record.dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{record.settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{record.dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{record.scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{record.preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{record.billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{record.freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{record.gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{record.gathDate,jdbcType=DATE},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    <set>
+      <if test="batchId != null">
+        BATCH_ID = #{batchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        MEMBER_ID = #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="billNo != null">
+        BILL_NO = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billMoney != null">
+        BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dueDate != null">
+        DUE_DATE = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="dueMatDate != null">
+        DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      </if>
+      <if test="issuDate != null">
+        ISSU_DATE = #{issuDate,jdbcType=DATE},
+      </if>
+      <if test="remitter != null">
+        REMITTER = #{remitter,jdbcType=VARCHAR},
+      </if>
+      <if test="drawee != null">
+        DRAWEE = #{drawee,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptorBranchCode != null">
+        ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptCfmBranchCode != null">
+        ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="acptGuarntrBranchCode != null">
+        ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discBranchCode != null">
+        DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="discGuarntrBranchCode != null">
+        DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="trustBranchCode != null">
+        TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      </if>
+      <if test="remainDays != null">
+        REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      </if>
+      <if test="dueRemainDays != null">
+        DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      </if>
+      <if test="interest != null">
+        INTEREST = #{interest,jdbcType=DECIMAL},
+      </if>
+      <if test="dueInterest != null">
+        DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="settleAmt != null">
+        SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="dueSettleAmt != null">
+        DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="scrRelationFlag != null">
+        SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="preRelationFlag != null">
+        PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="billId != null">
+        BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="freeznFlag != null">
+        FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gathType != null">
+        GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      </if>
+      <if test="gathDate != null">
+        GATH_DATE = #{gathDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guo.pojo.RebuyBill">
+    update REBUY_BILL
+    set BATCH_ID = #{batchId,jdbcType=BIGINT},
+      MEMBER_ID = #{memberId,jdbcType=CHAR},
+      BILL_NO = #{billNo,jdbcType=VARCHAR},
+      BILL_MONEY = #{billMoney,jdbcType=DECIMAL},
+      DUE_DATE = #{dueDate,jdbcType=DATE},
+      DUE_MAT_DATE = #{dueMatDate,jdbcType=DATE},
+      ISSU_DATE = #{issuDate,jdbcType=DATE},
+      REMITTER = #{remitter,jdbcType=VARCHAR},
+      DRAWEE = #{drawee,jdbcType=VARCHAR},
+      ACCEPTOR_BRANCH_CODE = #{acceptorBranchCode,jdbcType=CHAR},
+      ACPT_CFM_BRANCH_CODE = #{acptCfmBranchCode,jdbcType=CHAR},
+      ACPT_GUARNTR_BRANCH_CODE = #{acptGuarntrBranchCode,jdbcType=CHAR},
+      DISC_BRANCH_CODE = #{discBranchCode,jdbcType=CHAR},
+      DISC_GUARNTR_BRANCH_CODE = #{discGuarntrBranchCode,jdbcType=CHAR},
+      TRUST_BRANCH_CODE = #{trustBranchCode,jdbcType=CHAR},
+      REMAIN_DAYS = #{remainDays,jdbcType=INTEGER},
+      DUE_REMAIN_DAYS = #{dueRemainDays,jdbcType=INTEGER},
+      INTEREST = #{interest,jdbcType=DECIMAL},
+      DUE_INTEREST = #{dueInterest,jdbcType=DECIMAL},
+      SETTLE_AMT = #{settleAmt,jdbcType=DECIMAL},
+      DUE_SETTLE_AMT = #{dueSettleAmt,jdbcType=DECIMAL},
+      SCR_RELATION_FLAG = #{scrRelationFlag,jdbcType=VARCHAR},
+      PRE_RELATION_FLAG = #{preRelationFlag,jdbcType=VARCHAR},
+      BILL_ID = #{billId,jdbcType=BIGINT},
+      FREEZN_FLAG = #{freeznFlag,jdbcType=VARCHAR},
+      GATH_TYPE = #{gathType,jdbcType=VARCHAR},
+      GATH_DATE = #{gathDate,jdbcType=DATE},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
